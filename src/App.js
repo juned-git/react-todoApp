@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, Component } from "react";
+import { temporaryArray } from "./Functions";
+export let setStateForFunction;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+export default class App extends Component {
+  state = {
+    switchFunctionForButton: null,
+    switchFunctionForEnter: null,
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    return {
+      switchFunctionForButton: props.buttonFunction,
+      switchFunctionForEnter: props.inputFunction,
+    };
+  }
+
+  render() {
+    const tableCSS = {
+      borderCollapse: "collapse",
+    };
+    const listheadCSS = {
+      backgroundColor: "pink",
+      color: "brown",
+      align: "center",
+      border: "1px solid black",
+    };
+    const buttonCSS = {
+      cursor: "pointer",
+    };
+    return (
+      <Fragment>
+        <input
+          className="inputField"
+          placeholder="Add Notes..."
+          onKeyUp={this.state.switchFunctionForEnter}
+        />
+        <button
+          onClick={this.state.switchFunctionForButton}
+          className="btn"
+          style={buttonCSS}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          Add
+        </button>
+        <br />
+        <br />
+        <table style={tableCSS}>
+          <thead>
+            <tr>
+              <td colSpan="3" style={listheadCSS}>
+                TODO LIST...
+              </td>
+            </tr>
+          </thead>
+          <tbody className="tableBody">{temporaryArray}</tbody>
+        </table>
+      </Fragment>
+    );
+  }
 }
-
-export default App;
